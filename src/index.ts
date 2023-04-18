@@ -13,10 +13,13 @@ const photos: Photo[] = [
         name: 'me',
         url: 'https://ethansmith.io',
         category: PhotoCategory.Portrait,
+        taggedUsers: [],
         postedBy: {
             githubLogin: 'ethanmsmith',
             name: 'ethan',
             avatar: '',
+            postedPhotos: [],
+            inPhotos: []
         }
     },
     {
@@ -26,10 +29,13 @@ const photos: Photo[] = [
         name: 'grass',
         url: 'https://athenaeum.icu',
         category: PhotoCategory.Landscape,
+        taggedUsers: [],
         postedBy: {
             githubLogin: 'ethanmsmith',
             name: 'ethan',
             avatar: '',
+            postedPhotos: [],
+            inPhotos: []
         }
     },
     {
@@ -39,10 +45,13 @@ const photos: Photo[] = [
         name: 'bird',
         url: 'https://github.io',
         category: PhotoCategory.Nature,
+        taggedUsers: [],
         postedBy: {
             githubLogin: 'bmkuter',
             name: 'ben',
             avatar: '',
+            postedPhotos: [],
+            inPhotos: []
         }
     },
     {
@@ -52,24 +61,38 @@ const photos: Photo[] = [
         name: 'digital',
         url: 'https://bmk.io',
         category: PhotoCategory.Graphic,
+        taggedUsers: [],
         postedBy: {
             githubLogin: 'bmkuter',
             name: 'ben',
             avatar: '',
+            postedPhotos: [],
+            inPhotos: []
         }
     },
 ];
+
+const tags: {photoId: String, userId: string}[] = [
+    {photoId:"DSCN00001",userId:"ethanmsmith"},
+    {photoId:"DSCN00002",userId:"ethanmsmith"},
+    {photoId:"DSCN00002",userId:"bmkuter"},
+    {photoId:"DSCN00003",userId:"bmkuter"},
+]
 
 const users: User[] = [
     {
         githubLogin: 'ethanmsmith',
         name: 'ethan',
         avatar: 'dog',
+        postedPhotos: [],
+        inPhotos: []
     },
     {
         githubLogin: 'bmkuter',
         name: 'ben',
         avatar: 'cat',
+        postedPhotos: [],
+        inPhotos: []
     }
 ]
 
@@ -77,6 +100,7 @@ export interface ServerContext {
     dataSources: {
         photos: Photo[];
         users: User[];
+        tags: {photoId: String, userId: string}[];
     };
 }
 
@@ -99,7 +123,8 @@ const { url } = await startStandaloneServer(server, {
             // or your REST API classes.
             dataSources: {
                 photos: photos,
-                users: users
+                users: users,
+                tags: tags
             },
             port: 4000
         };

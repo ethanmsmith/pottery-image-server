@@ -50,7 +50,7 @@ export type MutationGithubAuthArgs = {
 
 
 export type MutationPostPhotoArgs = {
-  photo: PostPhotoInput;
+  input: PostPhotoInput;
 };
 
 export type Photo = {
@@ -61,6 +61,7 @@ export type Photo = {
   id: Scalars['ID'];
   name: Scalars['String'];
   postedBy: User;
+  taggedUsers: Array<User>;
   url: Scalars['String'];
 };
 
@@ -141,7 +142,9 @@ export type User = {
   __typename?: 'User';
   avatar?: Maybe<Scalars['String']>;
   githubLogin: Scalars['ID'];
+  inPhotos: Array<Photo>;
   name?: Maybe<Scalars['String']>;
+  postedPhotos: Array<Photo>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -269,7 +272,7 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 
 export type MutationResolvers<ContextType = ServerContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   githubAuth?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationGithubAuthArgs, 'code'>>;
-  postPhoto?: Resolver<ResolversTypes['Photo'], ParentType, ContextType, RequireFields<MutationPostPhotoArgs, 'photo'>>;
+  postPhoto?: Resolver<ResolversTypes['Photo'], ParentType, ContextType, RequireFields<MutationPostPhotoArgs, 'input'>>;
 }>;
 
 export type PhotoResolvers<ContextType = ServerContext, ParentType extends ResolversParentTypes['Photo'] = ResolversParentTypes['Photo']> = ResolversObject<{
@@ -279,6 +282,7 @@ export type PhotoResolvers<ContextType = ServerContext, ParentType extends Resol
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   postedBy?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  taggedUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -300,7 +304,9 @@ export type SubscriptionResolvers<ContextType = ServerContext, ParentType extend
 export type UserResolvers<ContextType = ServerContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   githubLogin?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  inPhotos?: Resolver<Array<ResolversTypes['Photo']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  postedPhotos?: Resolver<Array<ResolversTypes['Photo']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

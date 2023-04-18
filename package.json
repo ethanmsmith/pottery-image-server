@@ -91,9 +91,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "npm run codegen && tsc",
+    "compile": "npm run generate && tsc",
     "start": "npm run compile && node ./dist/src/index.js",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "generate": "graphql-codegen --config codegen.ts"
   },
   "keywords": [],
   "author": "",

@@ -16,12 +16,15 @@ type Photo {
   url: String!
   postedBy: User!
   category: PhotoCategory!
+  taggedUsers: [User!]!
 }
 
 type User {
   githubLogin: ID!
   name: String
   avatar: String
+  postedPhotos: [Photo!]!
+  inPhotos:[Photo!]!
 }
 
 enum SortDirection {
@@ -79,7 +82,7 @@ input DataPage {
 }
 
 type Mutation {
-  postPhoto(photo: PostPhotoInput!): Photo!
+  postPhoto(input: PostPhotoInput!): Photo!
   githubAuth(code: String!): AuthPayload!
 }
 
