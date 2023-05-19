@@ -6,6 +6,7 @@ enum PhotoCategory {
   LANDSCAPE
   GRAPHIC
   NATURE
+  POTTERY
 }
 
 type Photo {
@@ -16,15 +17,16 @@ type Photo {
   url: String!
   postedBy: User!
   category: PhotoCategory!
-  taggedUsers: [User!]!
+  taggedUsers: [User!]
 }
 
 type User {
+  id: ID
   githubLogin: ID!
   name: String
   avatar: String
-  postedPhotos: [Photo!]!
-  inPhotos:[Photo!]!
+  postedPhotos: [Photo!]
+  inPhotos:[Photo!]
 }
 
 enum SortDirection {

@@ -1,4 +1,4 @@
-import { Resolvers } from '../_generated/graphql';
+import { Photo, Resolvers, User } from '../_generated/graphql';
 import queries from './queries.js';
 import mutations from './mutations.js';
 import { GraphQLScalarType } from 'graphql';
@@ -8,16 +8,16 @@ import { GraphQLScalarType } from 'graphql';
 // generated types is useful syntax if you are defining your resolvers
 // in a single file.
 const resolvers: Resolvers = {
-    Query: queries, 
-    Mutation: mutations, 
+    Query: queries,
+    Mutation: mutations,
     Photo: {
         url: parent => `https://athenaeum.icu/img/${parent.id}.jpg`,
-        postedBy: (parent, _, context) => context.dataSources.users.find(u => u.githubLogin === parent.postedBy.githubLogin),
-        taggedUsers: (parent, _, context) => context.dataSources.tags.filter(tag => tag.photoId === parent.id).map(tag => tag.userId).map(userId => context.dataSources.users.find(u => u.githubLogin === userId))
+        postedBy: (parent, _, context) => context.repository.users.all().then((users: User[]) => users.find((u: User) => u.githubLogin === parent.postedBy.githubLogin)),
+        taggedUsers: (parent, _, context) => context.repository.tags.all().then(tags => tags.filter(tag => tag.photoId === parent.id).map(tag => tag.userId).map(userId => context.repository.users.all().then((users: User[]) => users.find((u: User) => u.id === userId))))
     },
     User: {
-        postedPhotos: (parent, _, context) => context.dataSources.photos.filter(p => p.postedBy.githubLogin === parent.githubLogin),
-        inPhotos: (parent, _, context) => context.dataSources.tags.filter(tag => tag.userId === parent.githubLogin).map(tag => tag.photoId).map(photoId => context.dataSources.photos.find(p => p.id === photoId))
+        postedPhotos: (parent, _, context) => context.repository.photos.all().then((photos: Photo[]) => photos.filter((p: Photo) => p.postedBy.id === parent.id )),
+        inPhotos: (parent, _, context) => context.repository.tags.all().then(tags => tags.filter(tag => tag.userId === parent.id).map(tag => tag.photoId).map(photoId => context.repository.photos.all().then((photos: Photo[]) => photos.find((p: Photo) => p.id === photoId))))
     },
     DateTime: new GraphQLScalarType({
         name: 'DateTime',

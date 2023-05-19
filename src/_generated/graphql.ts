@@ -61,7 +61,7 @@ export type Photo = {
   id: Scalars['ID'];
   name: Scalars['String'];
   postedBy: User;
-  taggedUsers: Array<User>;
+  taggedUsers?: Maybe<Array<User>>;
   url: Scalars['String'];
 };
 
@@ -71,6 +71,7 @@ export enum PhotoCategory {
   Landscape = 'LANDSCAPE',
   Nature = 'NATURE',
   Portrait = 'PORTRAIT',
+  Pottery = 'POTTERY',
   Selfie = 'SELFIE'
 }
 
@@ -142,9 +143,10 @@ export type User = {
   __typename?: 'User';
   avatar?: Maybe<Scalars['String']>;
   githubLogin: Scalars['ID'];
-  inPhotos: Array<Photo>;
+  id?: Maybe<Scalars['ID']>;
+  inPhotos?: Maybe<Array<Photo>>;
   name?: Maybe<Scalars['String']>;
-  postedPhotos: Array<Photo>;
+  postedPhotos?: Maybe<Array<Photo>>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -282,7 +284,7 @@ export type PhotoResolvers<ContextType = ServerContext, ParentType extends Resol
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   postedBy?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  taggedUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  taggedUsers?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -304,9 +306,10 @@ export type SubscriptionResolvers<ContextType = ServerContext, ParentType extend
 export type UserResolvers<ContextType = ServerContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   githubLogin?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  inPhotos?: Resolver<Array<ResolversTypes['Photo']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  inPhotos?: Resolver<Maybe<Array<ResolversTypes['Photo']>>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  postedPhotos?: Resolver<Array<ResolversTypes['Photo']>, ParentType, ContextType>;
+  postedPhotos?: Resolver<Maybe<Array<ResolversTypes['Photo']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
