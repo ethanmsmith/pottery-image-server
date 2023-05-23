@@ -53,6 +53,7 @@ type Query {
   allUsers(paging: DataPage, sorting: DataSort): [User!]!
   User(name: String!): User!
   Photo(id: ID!): Photo!
+  me: User
 }
 
 input PostPhotoInput {

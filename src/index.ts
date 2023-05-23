@@ -11,9 +11,13 @@ const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' });
 import photos from './repository/photos.js';
 import users from './repository/users.js';
 import tags from './repository/tags.js';
+import { User } from '_generated/graphql.js';
+import { connection } from 'repository/database.js';
 const port = 4000;
 
 export interface ServerContext {
+    githubToken: string,
+    currentUser: User,
     repository: {
         users: any;
         tags: any;
@@ -36,6 +40,8 @@ app.use(
     cors<cors.CorsRequest>(),
     expressMiddleware(server, {
         context: async ({ req }) => ({
+            githubToken: req.headers.authorization,
+            currentUser: await users.get(req.headers.authorization),
             repository: {
                 users: users,
                 tags: tags,

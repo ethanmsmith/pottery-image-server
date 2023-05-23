@@ -13,7 +13,8 @@ const queries: QueryResolvers = {
   },
   totalPhotos: (_, __, context): Promise<number> => {
    return context.repository.photos.count(); 
-  }
+  },
+  me: (parent, args, {currentUser}) => currentUser
 };
 
 export default queries; 

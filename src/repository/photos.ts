@@ -46,18 +46,13 @@ const count = (): Promise<number> => {
     });
 }
 
-const addPhoto = (args: any): Photo => {
+const add = (args: any): Photo => {
+    console.log(args);
     const newPhoto = {
         id: uuidv4(),
-        postedBy: {
-            id: "125040b6-2967-4d5c-8544-52490b7af5f3",
-            githubLogin: "ethanmsmith",
-            name: "ethan"
-        },
-        ...args.input,
-        created: (new Date()).toISOString()
+        ...args,
     }
-    connection().run("INSERT INTO photos VALUES (?,?,?,?,?,?)", newPhoto.id, newPhoto.created, newPhoto.description, newPhoto.name, newPhoto.postedBy.id, newPhoto.category)
+    connection().run("INSERT INTO photos VALUES (?,?,?,?,?,?)", newPhoto.id, newPhoto.created, newPhoto.description, newPhoto.name, newPhoto.postedBy.guid, newPhoto.category);
 
     return newPhoto;
 ;}
@@ -65,5 +60,5 @@ const addPhoto = (args: any): Photo => {
 export default {
     all,
     count,
-    addPhoto
+    add
 }

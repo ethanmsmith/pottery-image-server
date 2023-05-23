@@ -12,7 +12,7 @@ const resolvers: Resolvers = {
     Mutation: mutations,
     Photo: {
         url: parent => `https://athenaeum.icu/img/${parent.id}.jpg`,
-        postedBy: (parent, _, context) => context.repository.users.all().then((users: User[]) => users.find((u: User) => u.githubLogin === parent.postedBy.githubLogin)),
+        postedBy: (parent, _, context) => context.repository.users.all().then((users: User[]) => users.find((u: User) => u.id === parent.postedBy.id)),
         taggedUsers: (parent, _, context) => context.repository.tags.all().then(tags => tags.filter(tag => tag.photoId === parent.id).map(tag => tag.userId).map(userId => context.repository.users.all().then((users: User[]) => users.find((u: User) => u.id === userId))))
     },
     User: {
