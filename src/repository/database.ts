@@ -1,5 +1,5 @@
 import sqlite from 'sqlite3';
-const databaseName = 'photos.db';
+const databaseName = `${process.env.DATABASE}.db`;
 
 let instance: sqlite.Database;
 
