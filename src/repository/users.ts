@@ -39,8 +39,7 @@ const get = (token: string): Promise<User> => {
                         "avatar": row.avatar,
                     })
                 }
-                console.log(row)
-                if (err) {
+                    if (err) {
                     reject(err);
                 }
             });

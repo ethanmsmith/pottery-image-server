@@ -1,8 +1,9 @@
+import { Tag } from '_types/tags.js';
 import { connection } from './database.js';
 
-const all = (): Promise<{ photoId: string, userId: string }[]> => {
-    return new Promise<{ photoId: string, userId: string }[]>((resolve, reject) => {
-        let tags: { photoId: string, userId: string }[] = new Array<{ photoId: string, userId: string }>();
+const all = (): Promise<Tag[]> => {
+    return new Promise<Tag[]>((resolve, reject) => {
+        let tags: Tag[] = new Array<Tag>();
         connection().all("SELECT photo, user FROM tags",
             (err, rows: { photo: string, user: string }[]) => {
                 rows.forEach(row => {

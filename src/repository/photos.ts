@@ -47,7 +47,6 @@ const count = (): Promise<number> => {
 }
 
 const add = (args: any): Photo => {
-    console.log(args);
     const newPhoto = {
         id: uuidv4(),
         ...args,
